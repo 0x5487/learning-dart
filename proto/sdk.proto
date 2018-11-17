@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package proto;
+
+
+message CommandRequest {
+  string OP = 1;
+  bytes Data = 2;
+}
+
+message CommandReply {
+  string OP = 1;
+  bytes Data = 2;
+}
+
+
+message GetServerTimeReply {
+  int64 Time = 1;
+}
+
+message Empty {
+}
+
+message Message {
+  string ID = 1;
+  int32 SeqID = 2;
+  int32 Type = 3;
+  string GroupID = 4;
+  string Content = 5;      
+}
+
+
+service GatewayService {
+  rpc GetServerTime (Empty) returns (GetServerTimeReply) {}
+  rpc CreateCommandStream (stream CommandRequest) returns (stream CommandReply) {}
+}

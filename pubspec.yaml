@@ -1,0 +1,16 @@
+name: dartGRPC
+description: dartlang.org example code
+
+dependencies:
+  async: '>=1.13.3 <3.0.0'
+  grpc: ^0.6.6
+  protobuf: ^0.10.1
+  meta: ^1.0.5
+  http: '>=0.11.3+17 <0.13.0'
+  http2: ^0.1.7
+  json_annotation: ^2.0.0
+
+  
+dev_dependencies:
+  build_runner: ^1.0.0
+  json_serializable: ^2.0.0
