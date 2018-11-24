@@ -24,9 +24,9 @@ import 'dart:convert';
 Stream<CommandRequest> readLoop() async* {
   int num = 0;
   while (true) {
-    Message msg = new Message();
-    msg.Id = "123";
-    msg.Content = "Hello";
+    var msg = new Message();
+    msg.id = "123";
+    msg.content = "Hello";
 
     String messageJSON = json.encode(msg);
 

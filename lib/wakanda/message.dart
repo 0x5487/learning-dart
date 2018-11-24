@@ -4,8 +4,11 @@ part 'message.g.dart';
 
 @JsonSerializable()
 class Message {
-  String Id;
-  String Content;
+  String id;
+  String group_id;
+  int type;
+  int seq_id;
+  String content;
 
   Message();
 
