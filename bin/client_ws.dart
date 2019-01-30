@@ -7,10 +7,18 @@ import 'dart:convert';
 IOWebSocketChannel channel;
 
 void main(List<String> args) async {
-  print("start");
+  print("main");
+  connect();
+  await sendMessage();
+  //await new Future.delayed(new Duration(milliseconds: 60000));
+  print("end");
+}
+
+Future connect() async {
+  print("connect");
   try {
     channel = new IOWebSocketChannel.connect(
-      "ws://localhost:19999/ws",
+      "ws://10.200.3.2:19999/ws?token=4d96f463-dc14-44f0-af4f-c284e15c89cc",
     );
 
     channel.stream.listen((message) {
@@ -18,20 +26,22 @@ void main(List<String> args) async {
     }, onError: (error, StackTrace stackTrace) {
       // error handling
       print("err $error");
-    }, onDone: () {
+    }, onDone: () async {
       // communication has been closed
-      print("done");
+      print("close done");
+      // try to reconnect
+      await new Future.delayed(const Duration(seconds: 1), () => connect());
     });
 
-    sendMessage();
+    print("connect done");
+    //sendMessage();
   } catch (e) {
     print('Caught error: $e');
+    await new Future.delayed(const Duration(seconds: 1), () => connect());
   }
-
-  await new Future.delayed(new Duration(milliseconds: 60000));
 }
 
-Future<Null> sendMessage() async {
+Future sendMessage() async {
   int num = 0;
 
   while (true) {
@@ -48,6 +58,7 @@ Future<Null> sendMessage() async {
     var jsonCmd = json.encode(cmd);
     channel.sink.add(jsonCmd);
 
+    print("send message: $num");
     num++;
     await new Future.delayed(new Duration(milliseconds: 1000));
   }
